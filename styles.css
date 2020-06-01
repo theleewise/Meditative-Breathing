@@ -1,0 +1,128 @@
+*, :before, :after {
+    box-sizing: inherit;
+}
+html {
+    box-sizing: border-box;
+}
+html, body {
+    box-sizing: ;
+    margin: 0;
+    padding: 0;
+}
+body {
+    background-color: #333;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+.video-wrapper {
+    position: absolute;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    transition: opacity 1s ease-in-out;
+    opacity: 0;
+    overflow: hidden;
+    top: 0;
+}
+.breathing .video-wrapper { opacity: 1; }
+video {
+    min-height: 100%;
+    position: relative;
+    min-width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.main {
+    background: rgb(117,50,247);
+    background: linear-gradient(45deg, rgba(117,50,247,1) 0%, rgba(47,153,239,1) 100%);
+    border-radius: 50%;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.25);
+    display: flex;
+    color: #fff;
+    cursor: pointer;
+    font-family: sans-serif;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: all 3000ms ease-in-out;
+    margin: 50px;
+    position: relative;
+    height: 300px;
+    width: 300px;
+}
+.main.inhale {
+    box-shadow: 20px 20px 20px rgba(0,0,0,0.15);
+    transform: scale(1.25);
+}
+
+.timer {
+    height: calc(100% + 20px);
+    width: calc(100% + 20px);
+    left: -10px;
+    top: -10px;
+    position: absolute;
+    border: solid 3px rgba(255,255,255,0.15);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.25s ease-in-out;
+}
+.seperators span {
+    background: #fff;
+    display: block;
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 6px;
+    border-radius: 0 0 12px 12px;
+}
+.seperators span:nth-child(1) { top: -3px; left: calc(50% - 6px); }
+.seperators span:nth-child(2) { top: calc(50% - 6px); right: -6px; transform: rotate(90deg); }
+.seperators span:nth-child(3) { bottom: -3px; left: calc(50% - 6px); transform: rotate(180deg); }
+.seperators span:nth-child(4) { top: calc(50% - 6px); left: -6px; transform: rotate(-90deg); }
+
+.timer:before {
+    background: rgb(47,153,239);
+    display: block;
+    content: '';
+    position: absolute;
+    left: calc(50% - 6px);
+    top: calc(50% - 4px);
+    width: 12px;
+    height: 6px;
+    border-radius: 0 0 12px 12px;
+    z-index: 1;
+}
+.breathing .timer {
+    opacity: 1;
+}
+.breathing .timer:before {
+    -webkit-animation: orbit 12s linear infinite; /* Chrome, Safari 5 */
+    -moz-animation: orbit 12s linear infinite; /* Firefox 5-15 */
+    -o-animation: orbit 12s linear infinite; /* Opera 12+ */
+    animation: orbit 12s linear infinite; /* Chrome, Firefox 16+,
+    IE 10+, Safari 5 */
+}
+
+@-webkit-keyframes orbit {
+from { -webkit-transform: rotate(0deg) translateY(-160px); }
+to { -webkit-transform: rotate(360deg) translateY(-160px); }
+}
+
+@-moz-keyframes orbit {
+from { -moz-transform: rotate(0deg) translateY(-160px); }
+to { -moz-transform: rotate(360deg) translateY(-160px); }
+}
+
+@-o-keyframes orbit {
+from { -o-transform: rotate(0deg) translateY(-160px); }
+to { -o-transform: rotate(360deg) translateY(-160px); }
+}
+
+@keyframes orbit {
+from { transform: rotate(0deg) translateY(-160px); }
+to { transform: rotate(360deg) translateY(-160px); }
+}

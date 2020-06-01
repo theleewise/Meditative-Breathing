@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meditative Breathing</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="video-wrapper">
+        <video loop>
+            <source src="assets/video.webm" type="video/webm" />
+        </video>
+    </div>
+    <div class="main">
+        <span class="label">start</span>
+        <span class="timer">
+            <span class="seperators"><span></span><span></span><span></span><span></span></span>
+        </span>
+    </div>
+
+    <script>
+        const body = document.querySelector('body');
+        const main = document.querySelector('.main');
+        const label = main.querySelector('.label');
+        const video = document.querySelector('video');
+        const audio = new Audio('assets/audio.mp3');
+        audio.loop = true;
+        
+        const statusOptions = ['breathe in','hold','breath out','hold'];
+        let timer;
+        let curStatus = 0;
+        let isPlaying = 0;
+
+        function breathing(){
+            label.innerHTML = statusOptions[curStatus];
+
+            if(curStatus === 0){
+                main.classList.add('inhale');
+                main.classList.remove('exhale');
+            }
+            if(curStatus === 2){
+                main.classList.add('exhale');
+                main.classList.remove('inhale');
+            }
+
+            curStatus = (curStatus + 1 === statusOptions.length) ? 0 : curStatus + 1;
+        }
+
+        function start(){
+            video.play();
+            audio.play();
+            body.classList.add('breathing');
+            breathing();
+            timer = setInterval(breathing, 3000);
+        }
+        function stop(){
+            audio.pause();
+            audio.currentTime = 0;
+            video.pause();
+            video.currentTime = 0;
+            curStatus = 0;
+            label.innerHTML = 'start';
+            body.classList.remove('breathing');
+            main.classList.remove('inhale', 'exhale');
+            clearInterval(timer);
+        }
+        
+        main.addEventListener('click',() => {
+            if(!isPlaying){ start(); } else { stop(); }
+            isPlaying = !isPlaying;
+        });
+
+        audio.addEventListener('timeupdate', function () {
+            var buffer = .44
+            if (this.currentTime > this.duration - buffer) {
+                this.currentTime = 0
+                this.play()
+            }
+        });
+    </script>
+</body>
+</html>
